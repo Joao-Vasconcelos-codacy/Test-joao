@@ -15,7 +15,7 @@ def press(button_text):
         entry.delete(0, tk.END)
     else:
         entry.insert(tk.END, button_text)
-
+"Implementa melhorias na calculadora"
 # Criar a janela principal
 root = tk.Tk()
 root.title("Calculadora")

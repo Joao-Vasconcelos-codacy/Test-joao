@@ -1,0 +1,58 @@
+import tkinter as tk
+from tkinter import messagebox
+
+# Função para processar a entrada do usuário
+def press(button_text):
+    if button_text == "=":
+        try:
+            # Avaliar a expressão na entrada
+            result = eval(entry.get())
+            entry.delete(0, tk.END)
+            entry.insert(tk.END, str(result))
+        except Exception as e:
+            messagebox.showerror("Erro", "Entrada inválida!")
+    elif button_text == "C":
+        entry.delete(0, tk.END)
+    elif button_text == "%":
+        try:
+            # Aqui está o erro intencional: o cálculo de porcentagem está errado
+            current_value = float(entry.get())
+            result = current_value / 10  # Este cálculo está errado (deveria ser `current_value / 100`)
+            entry.delete(0, tk.END)
+            entry.insert(tk.END, str(result))
+        except Exception as e:
+            messagebox.showerror("Erro", "Não foi possível calcular a porcentagem!")
+    else:
+        entry.insert(tk.END, button_text)
+
+# Configuração da interface gráfica
+root = tk.Tk()
+root.title("Calculadora")
+
+# Campo de entrada
+entry = tk.Entry(root, width=20, font=("Arial", 16), borderwidth=5, relief="ridge")
+entry.grid(row=0, column=0, columnspan=4)
+
+# Botões da calculadora
+buttons = [
+    "7", "8", "9", "+",
+    "4", "5", "6", "-",
+    "1", "2", "3", "*",
+    "C", "0", "=", "/",
+    "%"
+]
+
+row_val = 1
+col_val = 0
+
+for button_text in buttons:
+    tk.Button(
+        root, text=button_text, width=5, font=("Arial", 14), command=lambda b=button_text: press(b)
+    ).grid(row=row_val, column=col_val)
+    col_val += 1
+    if col_val > 3:
+        col_val = 0
+        row_val += 1
+
+# Iniciar o loop da interface gráfica
+root.mainloop()
